@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitnessBook | Tu guía fitness personalizada</title>
+
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+
+<header>
+
+    <div class="container nav">
+
+        <div class="logo">
+            FitnessBook
+        </div>
+
+        <nav>
+
+            <a href="#test">Test</a>
+            <a href="#ebooks">Cuadernillos</a>
+            <a href="#imc">Calculadora</a>
+            <a href="#faq">FAQ</a>
+
+        </nav>
+
+        <a href="#test" class="btn-nav">
+            Empezar
+        </a>
+
+    </div>
+
+</header>
+
+<!-- ================= HERO ================= -->
+
+<section class="hero">
+
+    <div class="container hero-content">
+
+        <span class="tag">
+            Tu guía fitness personalizada
+        </span>
+
+        <h1>
+            Descubre qué plan de alimentación y entrenamiento es perfecto para ti.
+        </h1>
+
+        <p>
+            Haz un pequeño test de menos de un minuto y descubre el cuadernillo que mejor se adapta a tu objetivo.
+        </p>
+
+        <div class="hero-buttons">
+
+            <a href="#test" class="btn-white">
+                Hacer el Test
+            </a>
+
+            <a href="#ebooks" class="btn-black">
+                Ver Cuadernillos
+            </a>
+
+            <a href="#imc" class="btn-white">
+                Calcular IMC
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ================= TEST ================= -->
+
+<section class="test section" id="test">
+
+<div class="container">
+
+    <div class="section-title">
+
+        <span>TEST PERSONALIZADO</span>
+
+        <h2>
+            Encuentra tu cuadernillo ideal
+        </h2>
+
+        <p>
+            Responde unas preguntas y te recomendaremos el mejor plan para conseguir tu objetivo.
+        </p>
+
+    </div>
+
+<div class="test-container">
+
+    <div class="progress-header">
+
+        <span id="stepText">
+            Pregunta 1 de 5
+        </span>
+
+        <div class="progress">
+
+            <div class="progress-fill" id="progressFill"></div>
+
+        </div>
+
+    </div>
+
+    <div class="test-card">
+
+        <h3 id="questionTitle"></h3>
+
+        <div id="answersContainer"></div>
+
+    </div>
+
+    <div class="test-navigation">
+
+        <button
+            id="prevBtn"
+            class="btn-white"
+            disabled>
+
+            Atrás
+
+        </button>
+
+        <button
+            id="nextBtn"
+            class="btn-black">
+
+            Siguiente
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<div id="resultBox" class="result-box">
+
+    <h3>Tu cuadernillo ideal es</h3>
+
+    <h2 id="recommendedBook"></h2>
+
+    <p id="recommendedText"></p>
+
+    <a href="#ebooks" class="btn-black">
+
+        Ver Cuadernillo
+
+    </a>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ================= CUADERNILLOS ================= -->
+
+<section class="ebooks section" id="ebooks">
+
+<div class="container">
+
+<div class="section-title">
+
+<span>CUADERNILLOS</span>
+
+<h2>
+Elige tu objetivo
+</h2>
+
+<p>
+
+Todos incluyen guía nutricional, entrenamiento y consejos prácticos.
+
+</p>
+
+</div>
+
+<div class="cards">
+
+<!-- Card -->
+
+<div class="card">
+
+<div class="card-image">
+
+<img src="images/definicion.jpg" alt="Definición">
+
+</div>
+
+<div class="card-content">
+
+<h3>
+
+Definición
+
+</h3>
+
+<p>
+
+Pierde grasa manteniendo masa muscular.
+
+</p>
+
+<ul>
+
+<li>Plan de comidas</li>
+
+<li>Rutinas</li>
+
+<li>Errores comunes</li>
+
+<li>Consejos</li>
+
+</ul>
+
+<div class="price">
+
+19,99€
+
+</div>
+
+<a href="#" class="btn-black">
+
+Comprar
+
+</a>
+
+</div>
+
+</div>
+
+<!-- Card -->
+
+<div class="card">
+
+<div class="card-image">
+
+<img src="images/volumen.jpg" alt="Volumen">
+
+</div>
+
+<div class="card-content">
+
+<h3>
+
+Volumen
+
+</h3>
+
+<p>
+
+Gana músculo de forma inteligente.
+
+</p>
+
+<ul>
+
+<li>Superávit limpio</li>
+
+<li>Rutinas</li>
+
+<li>Suplementación</li>
+
+<li>Recetas</li>
+
+</ul>
+
+<div class="price">
+
+19,99€
+
+</div>
+
+<a href="#" class="btn-black">
+
+Comprar
+
+</a>
+
+</div>
+
+</div>
+
+<!-- Card -->
+
+<div class="card">
+
+<div class="card-image">
+
+<img src="images/mantenimiento.jpg" alt="Mantenimiento">
+
+</div>
+
+<div class="card-content">
+
+<h3>
+
+Mantenimiento
+
+</h3>
+
+<p>
+
+Mantén tu físico durante todo el año.
+
+</p>
+
+<ul>
+
+<li>Equilibrio</li>
+
+<li>Hábitos</li>
+
+<li>Flexibilidad</li>
+
+<li>Salud</li>
+
+</ul>
+
+<div class="price">
+
+19,99€
+
+</div>
+
+<a href="#" class="btn-black">
+
+Comprar
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ================= IMC ================= -->
+
+<section id="imc" class="section">
+
+<div class="container">
+
+<div class="section-title">
+
+<span>CALCULADORA</span>
+
+<h2>
+
+Calcula tu IMC
+
+</h2>
+
+<p>
+
+Introduce tu peso y altura para conocer tu estado.
+
+</p>
+
+</div>
+
+<div class="imc-box">
+
+<div class="input-group">
+
+<label>
+
+Altura (cm)
+
+</label>
+
+<input
+type="number"
+id="height"
+placeholder="Ej. 175">
+
+</div>
+
+<div class="input-group">
+
+<label>
+
+Peso (kg)
+
+</label>
+
+<input
+type="number"
+id="weight"
+placeholder="Ej. 70">
+
+</div>
+
+<button id="calculateIMC" class="btn-black">
+
+Calcular IMC
+
+</button>
+
+<div id="imcResult">
+
+<h3>
+
+Tu resultado aparecerá aquí.
+
+</h3>
+
+<p>
+
+Introduce los datos para comenzar.
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ================= FAQ ================= -->
+
+<section id="faq" class="section">
+
+<div class="container">
+
+<div class="section-title">
+
+<span>PREGUNTAS FRECUENTES</span>
+
+<h2>
+
+Todo lo que necesitas saber
+
+</h2>
+
+</div>
+
+<div class="faq-item">
+
+<h3>
+
+¿Recibo el cuadernillo al instante?
+
+</h3>
+
+<p>
+
+Sí, una vez realizado el pago podrás descargarlo inmediatamente.
+
+</p>
+
+</div>
+
+<div class="faq-item">
+
+<h3>
+
+¿Sirve para principiantes?
+
+</h3>
+
+<p>
+
+Sí. Está pensado tanto para personas que empiezan como para quienes ya entrenan.
+
+</p>
+
+</div>
+
+<div class="faq-item">
+
+<h3>
+
+¿Necesito suplementos?
+
+</h3>
+
+<p>
+
+No. Los suplementos son opcionales y el cuadernillo explica cuándo pueden ser útiles.
+
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+<div class="container footer">
+
+<div>
+
+<h3>
+
+FitnessBook
+
+</h3>
+
+<p>
+
+Empieza hoy a mejorar tu alimentación y entrenamiento con una guía adaptada a tus objetivos.
+
+</p>
+
+</div>
+
+<div>
+
+<a href="#">
+
+Instagram
+
+</a>
+
+<a href="#">
+
+TikTok
+
+</a>
+
+<a href="#">
+
+Contacto
+
+</a>
+
+</div>
+
+</div>
+
+</footer>
+
+<script src="script.js"></script>
+
+</body>
+</html>
