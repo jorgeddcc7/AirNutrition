@@ -479,25 +479,49 @@ const UIModule = (() => {
         });
     }
 
-    /* --- Menú hamburguesa --- */
-    function initMobileMenu(){
+    /* --- Menú hamburguesa móvil --- */
+    function initMobileMenu() {
         const toggle = document.getElementById('navToggle');
         const nav = document.getElementById('primaryNav');
-        if(!toggle || !nav) return;
 
-        toggle.addEventListener('click', () => {
-            const open = nav.classList.toggle('open');
-            toggle.setAttribute('aria-expanded', open);
-            toggle.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+        if (!toggle || !nav) {
+            console.warn('⚠️ Menú hamburguesa: no se encontró #navToggle o #primaryNav');
+            return;
+        }
+
+        toggle.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+
+            const isOpen = nav.classList.toggle('open');
+            toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+            toggle.setAttribute('aria-label', isOpen ? 'Cerrar menú' : 'Abrir menú');
         });
 
-        // Cerrar al pulsar un enlace
+        /* Cerrar al pulsar un enlace */
         nav.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', () => {
                 nav.classList.remove('open');
                 toggle.setAttribute('aria-expanded', 'false');
                 toggle.setAttribute('aria-label', 'Abrir menú');
             });
+        });
+
+        /* Cerrar al hacer click fuera del menú */
+        document.addEventListener('click', (e) => {
+            if (!nav.classList.contains('open')) return;
+            if (nav.contains(e.target) || toggle.contains(e.target)) return;
+            nav.classList.remove('open');
+            toggle.setAttribute('aria-expanded', 'false');
+            toggle.setAttribute('aria-label', 'Abrir menú');
+        });
+
+        /* Cerrar al redimensionar a escritorio */
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 900 && nav.classList.contains('open')) {
+                nav.classList.remove('open');
+                toggle.setAttribute('aria-expanded', 'false');
+            }
         });
     }
 
@@ -555,6 +579,7 @@ const UIModule = (() => {
         initFooterYear();
         initDoubleClickGuard();
         initLoadedClass();
+        initMobileMenu();
     }
 
     return { init };
@@ -568,7 +593,6 @@ document.addEventListener('DOMContentLoaded', () => {
     TestModule.init();
     IMCModule.init();
     UIModule.init();
-    initMobileMenu();
     console.log('%cAir Nutrition', 'font-size:30px;font-weight:bold;color:#2f7d4f');
     console.log('%cLanding cargada correctamente.', 'font-size:14px;color:#666');
 });
