@@ -3,560 +3,323 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FitnessBook | Tu guía fitness personalizada</title>
+    <meta name="theme-color" content="#111111">
 
-    <link rel="stylesheet" href="styles.css">
+    <title>Air Nutrition | Tu guía fitness personalizada</title>
 
-    <!-- Google Fonts -->
+    <!-- SEO -->
+    <meta name="description" content="Descubre tu plan de alimentación y entrenamiento ideal con Air Nutrition. Test personalizado, calculadora IMC y cuadernillos adaptados a tu objetivo.">
+    <meta name="author" content="Air Nutrition">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Air Nutrition | Tu guía fitness personalizada">
+    <meta property="og:description" content="Test personalizado + calculadora IMC + cuadernillos de entrenamiento y nutrición.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="images/og-cover.jpg">
+    <meta property="og:locale" content="es_ES">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Air Nutrition | Tu guía fitness personalizada">
+    <meta name="twitter:description" content="Test personalizado + calculadora IMC + cuadernillos.">
+    <meta name="twitter:image" content="images/og-cover.jpg">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="images/airlogo.svg">
+    <link rel="icon" type="image/png" sizes="48x48" href="images/favicon-48.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="images/favicon-96.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
 
 <!-- ================= NAVBAR ================= -->
-
 <header>
-
     <div class="container nav">
+        <a href="#" class="logo" aria-label="Air Nutrition — Inicio">
+        <img src="images/airlogo.png" alt="Air Nutrition" class="logo-mark">
+        <span class="logo-text">Air<span>Nutrition</span></span>
+        </a>
 
-        <div class="logo">
-            FitnessBook
-        </div>
+        <!-- Botón hamburguesa (móvil) -->
+        <button class="nav-toggle" id="navToggle"
+                aria-label="Abrir menú" aria-expanded="false" aria-controls="primaryNav">
+            <span></span><span></span><span></span>
+        </button>
 
-        <nav>
-
+        <nav id="primaryNav" aria-label="Navegación principal">
+            <a href="#how">Cómo funciona</a>
             <a href="#test">Test</a>
             <a href="#ebooks">Cuadernillos</a>
             <a href="#imc">Calculadora</a>
             <a href="#faq">FAQ</a>
-
+            <a href="#test" class="btn-nav">Empezar</a>
         </nav>
-
-        <a href="#test" class="btn-nav">
-            Empezar
-        </a>
-
     </div>
-
 </header>
 
 <!-- ================= HERO ================= -->
-
 <section class="hero">
-
     <div class="container hero-content">
-
-        <span class="tag">
-            Tu guía fitness personalizada
-        </span>
+        <p class="hero-eyebrow">Tu guía fitness personalizada</p>
 
         <h1>
-            Descubre qué plan de alimentación y entrenamiento es perfecto para ti.
+            Descubre qué plan de alimentación<br>
+            y entrenamiento es <em>perfecto para ti</em>.
         </h1>
 
-        <p>
-            Haz un pequeño test de menos de un minuto y descubre el cuadernillo que mejor se adapta a tu objetivo.
+        <p class="hero-subtitle">
+            Haz un test de menos de un minuto y descubre el cuadernillo que mejor
+            se adapta a tu objetivo. Sin dietas milagro. Sin humo.
         </p>
 
         <div class="hero-buttons">
-
-            <a href="#test" class="btn-white">
-                Hacer el Test
-            </a>
-
-            <a href="#ebooks" class="btn-black">
-                Ver Cuadernillos
-            </a>
-
-            <a href="#imc" class="btn-white">
-                Calcular IMC
-            </a>
-
+            <a href="#test" class="btn-black">Hacer el Test →</a>
+            <a href="#imc" class="btn-white">Calcular IMC</a>
+            <a href="#ebooks" class="btn-ghost">Ver Cuadernillos</a>
         </div>
 
+        <div class="hero-meta">
+            <span>✓ Menos de 1 minuto</span>
+            <span>✓ Sin registro</span>
+            <span>✓ 100% personalizado</span>
+        </div>
     </div>
+</section>
 
+<!-- ================= CÓMO FUNCIONA ================= -->
+<section class="how section" id="how">
+    <div class="container">
+        <div class="section-title">
+            <span>CÓMO FUNCIONA</span>
+            <h2>Tres pasos. Un minuto.</h2>
+            <p>Sin registros, sin spam, sin complicaciones.</p>
+        </div>
+
+        <div class="steps">
+            <article class="step">
+                <div class="step-number">01</div>
+                <h3>Haz el test</h3>
+                <p>Responde 5 preguntas rápidas sobre tu objetivo, nivel y preferencias.</p>
+            </article>
+
+            <article class="step">
+                <div class="step-number">02</div>
+                <h3>Descubre tu plan</h3>
+                <p>Te recomendamos el cuadernillo que mejor se adapta a ti. Sin compromiso.</p>
+            </article>
+
+            <article class="step">
+                <div class="step-number">03</div>
+                <h3>Empieza hoy</h3>
+                <p>Descarga tu guía al instante y ponte en marcha con un plan claro.</p>
+            </article>
+        </div>
+    </div>
 </section>
 
 <!-- ================= TEST ================= -->
-
 <section class="test section" id="test">
-
-<div class="container">
-
-    <div class="section-title">
-
-        <span>TEST PERSONALIZADO</span>
-
-        <h2>
-            Encuentra tu cuadernillo ideal
-        </h2>
-
-        <p>
-            Responde unas preguntas y te recomendaremos el mejor plan para conseguir tu objetivo.
-        </p>
-
-    </div>
-
-<div class="test-container">
-
-    <div class="progress-header">
-
-        <span id="stepText">
-            Pregunta 1 de 5
-        </span>
-
-        <div class="progress">
-
-            <div class="progress-fill" id="progressFill"></div>
-
+    <div class="container">
+        <div class="section-title">
+            <span>TEST PERSONALIZADO</span>
+            <h2>Encuentra tu cuadernillo ideal</h2>
+            <p>Responde unas preguntas y te recomendaremos el mejor plan para conseguir tu objetivo.</p>
         </div>
 
+        <div class="test-container">
+            <div class="progress-header">
+                <span id="stepText">Pregunta 1 de 5</span>
+                <div class="progress" role="progressbar"
+                     aria-valuemin="0" aria-valuemax="100" aria-valuenow="20">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+            </div>
+
+            <div class="test-card">
+                <h3 id="questionTitle"></h3>
+                <div id="answersContainer" role="radiogroup" aria-labelledby="questionTitle"></div>
+            </div>
+
+            <div class="test-navigation">
+                <button id="prevBtn" class="btn-white" disabled>Atrás</button>
+                <button id="nextBtn" class="btn-black">Siguiente</button>
+            </div>
+        </div>
+
+        <div id="resultBox" class="result-box" role="region" aria-live="polite">
+            <h3>Tu cuadernillo ideal es</h3>
+            <h2 id="recommendedBook"></h2>
+            <p id="recommendedText"></p>
+            <a href="#ebooks" class="btn-black">Ver Cuadernillo</a>
+        </div>
     </div>
-
-    <div class="test-card">
-
-        <h3 id="questionTitle"></h3>
-
-        <div id="answersContainer"></div>
-
-    </div>
-
-    <div class="test-navigation">
-
-        <button
-            id="prevBtn"
-            class="btn-white"
-            disabled>
-
-            Atrás
-
-        </button>
-
-        <button
-            id="nextBtn"
-            class="btn-black">
-
-            Siguiente
-
-        </button>
-
-    </div>
-
-</div>
-
-
-<div id="resultBox" class="result-box">
-
-    <h3>Tu cuadernillo ideal es</h3>
-
-    <h2 id="recommendedBook"></h2>
-
-    <p id="recommendedText"></p>
-
-    <a href="#ebooks" class="btn-black">
-
-        Ver Cuadernillo
-
-    </a>
-
-</div>
-
-</div>
-
 </section>
 
-<!-- ================= CUADERNILLOS ================= -->
-
+<!-- CUADERNILLOS -->
 <section class="ebooks section" id="ebooks">
-
-<div class="container">
-
-<div class="section-title">
-
-<span>CUADERNILLOS</span>
-
-<h2>
-Elige tu objetivo
-</h2>
-
-<p>
-
-Todos incluyen guía nutricional, entrenamiento y consejos prácticos.
-
-</p>
-
-</div>
-
-<div class="cards">
-
-<!-- Card -->
-
-<div class="card">
-
-<div class="card-image">
-
-<img src="images/definicion.jpg" alt="Definición">
-
-</div>
-
-<div class="card-content">
-
-<h3>
-
-Definición
-
-</h3>
-
-<p>
-
-Pierde grasa manteniendo masa muscular.
-
-</p>
-
-<ul>
-
-<li>Plan de comidas</li>
-
-<li>Rutinas</li>
-
-<li>Errores comunes</li>
-
-<li>Consejos</li>
-
-</ul>
-
-<div class="price">
-
-19,99€
-
-</div>
-
-<a href="#" class="btn-black">
-
-Comprar
-
-</a>
-
-</div>
-
-</div>
-
-<!-- Card -->
-
-<div class="card">
-
-<div class="card-image">
-
-<img src="images/volumen.jpg" alt="Volumen">
-
-</div>
-
-<div class="card-content">
-
-<h3>
-
-Volumen
-
-</h3>
-
-<p>
-
-Gana músculo de forma inteligente.
-
-</p>
-
-<ul>
-
-<li>Superávit limpio</li>
-
-<li>Rutinas</li>
-
-<li>Suplementación</li>
-
-<li>Recetas</li>
-
-</ul>
-
-<div class="price">
-
-19,99€
-
-</div>
-
-<a href="#" class="btn-black">
-
-Comprar
-
-</a>
-
-</div>
-
-</div>
-
-<!-- Card -->
-
-<div class="card">
-
-<div class="card-image">
-
-<img src="images/mantenimiento.jpg" alt="Mantenimiento">
-
-</div>
-
-<div class="card-content">
-
-<h3>
-
-Mantenimiento
-
-</h3>
-
-<p>
-
-Mantén tu físico durante todo el año.
-
-</p>
-
-<ul>
-
-<li>Equilibrio</li>
-
-<li>Hábitos</li>
-
-<li>Flexibilidad</li>
-
-<li>Salud</li>
-
-</ul>
-
-<div class="price">
-
-19,99€
-
-</div>
-
-<a href="#" class="btn-black">
-
-Comprar
-
-</a>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
+    <div class="container">
+        <div class="section-title">
+            <span>CUADERNILLOS</span>
+            <h2>Elige tu objetivo</h2>
+            <p>Todos incluyen guía nutricional, entrenamiento y consejos prácticos.</p>
+        </div>
+
+        <div class="cards">
+            <!-- CARD 1 — Definición (DISPONIBLE) -->
+            <article class="card card-featured">
+                <div class="card-image">
+                    <img src="images/definicion.png" alt="Cuadernillo de Definición" loading="lazy">
+                    <span class="card-tag card-tag-live">Disponible</span>
+                </div>
+                <div class="card-content">
+                    <div class="card-head">
+                        <h3>Definición</h3>
+                        <div class="price">19,99€</div>
+                    </div>
+                    <p>Pierde grasa manteniendo masa muscular.</p>
+                    <ul>
+                        <li>Plan de comidas</li>
+                        <li>Rutinas</li>
+                        <li>Errores comunes</li>
+                        <li>Consejos</li>
+                    </ul>
+                    <a href="pdfs/cuadernillo-perder-grasa.pdf"
+                       class="btn-black"
+                       download>
+                        Comprar
+                    </a>
+                </div>
+            </article>
+            <!-- CARD 2 — Volumen (PRÓXIMAMENTE) -->
+            <article class="card">
+                <div class="card-image">
+                    <img src="images/volumen.png" alt="Cuadernillo de Volumen" loading="lazy">
+                    <span class="card-tag">Próximamente</span>
+                </div>
+                <div class="card-content">
+                    <div class="card-head">
+                        <h3>Volumen</h3>
+                        <div class="price">19,99€</div>
+                    </div>
+                    <p>Gana músculo de forma inteligente.</p>
+                    <ul>
+                        <li>Superávit limpio</li>
+                        <li>Rutinas</li>
+                        <li>Suplementación</li>
+                        <li>Recetas</li>
+                    </ul>
+                    <button type="button" class="btn-black btn-disabled" disabled>
+                        Próximamente
+                    </button>
+                </div>
+            </article>
+            <!-- CARD 3 — Mantenimiento (PRÓXIMAMENTE) -->
+            <article class="card">
+                <div class="card-image">
+                    <img src="images/mantenimiento.png" alt="Cuadernillo de Mantenimiento" loading="lazy">
+                    <span class="card-tag">Próximamente</span>
+                </div>
+                <div class="card-content">
+                    <div class="card-head">
+                        <h3>Mantenimiento</h3>
+                        <div class="price">19,99€</div>
+                    </div>
+                    <p>Mantén tu físico durante todo el año.</p>
+                    <ul>
+                        <li>Equilibrio</li>
+                        <li>Hábitos</li>
+                        <li>Flexibilidad</li>
+                        <li>Salud</li>
+                    </ul>
+                    <button type="button" class="btn-black btn-disabled" disabled>
+                        Próximamente
+                    </button>
+                </div>
+            </article>
+        </div>
+    </div>
 </section>
 
 <!-- ================= IMC ================= -->
-
 <section id="imc" class="section">
+    <div class="container">
+        <div class="section-title">
+            <span>CALCULADORA</span>
+            <h2>Calcula tu IMC</h2>
+            <p>Introduce tu peso y altura para conocer tu estado.</p>
+        </div>
 
-<div class="container">
+        <div class="imc-box">
+            <div class="input-group">
+                <label for="height">Altura (cm)</label>
+                <input type="number" id="height" placeholder="Ej. 175" min="80" max="250" inputmode="numeric">
+            </div>
 
-<div class="section-title">
+            <div class="input-group">
+                <label for="weight">Peso (kg)</label>
+                <input type="number" id="weight" placeholder="Ej. 70" min="20" max="350" inputmode="decimal">
+            </div>
 
-<span>CALCULADORA</span>
+            <button id="calculateIMC" class="btn-black">Calcular IMC</button>
 
-<h2>
-
-Calcula tu IMC
-
-</h2>
-
-<p>
-
-Introduce tu peso y altura para conocer tu estado.
-
-</p>
-
-</div>
-
-<div class="imc-box">
-
-<div class="input-group">
-
-<label>
-
-Altura (cm)
-
-</label>
-
-<input
-type="number"
-id="height"
-placeholder="Ej. 175">
-
-</div>
-
-<div class="input-group">
-
-<label>
-
-Peso (kg)
-
-</label>
-
-<input
-type="number"
-id="weight"
-placeholder="Ej. 70">
-
-</div>
-
-<button id="calculateIMC" class="btn-black">
-
-Calcular IMC
-
-</button>
-
-<div id="imcResult">
-
-<h3>
-
-Tu resultado aparecerá aquí.
-
-</h3>
-
-<p>
-
-Introduce los datos para comenzar.
-
-</p>
-
-</div>
-
-</div>
-
-</div>
-
+            <div id="imcResult" role="status" aria-live="polite">
+                <h3>Tu resultado aparecerá aquí.</h3>
+                <p>Introduce los datos para comenzar.</p>
+            </div>
+        </div>
+    </div>
 </section>
 
 <!-- ================= FAQ ================= -->
-
 <section id="faq" class="section">
+    <div class="container">
+        <div class="section-title">
+            <span>PREGUNTAS FRECUENTES</span>
+            <h2>Todo lo que necesitas saber</h2>
+        </div>
 
-<div class="container">
+        <details class="faq-item">
+            <summary>¿Recibo el cuadernillo al instante?</summary>
+            <p>Sí, una vez realizado el pago podrás descargarlo inmediatamente.</p>
+        </details>
 
-<div class="section-title">
+        <details class="faq-item">
+            <summary>¿Sirve para principiantes?</summary>
+            <p>Sí. Está pensado tanto para personas que empiezan como para quienes ya entrenan.</p>
+        </details>
 
-<span>PREGUNTAS FRECUENTES</span>
-
-<h2>
-
-Todo lo que necesitas saber
-
-</h2>
-
-</div>
-
-<div class="faq-item">
-
-<h3>
-
-¿Recibo el cuadernillo al instante?
-
-</h3>
-
-<p>
-
-Sí, una vez realizado el pago podrás descargarlo inmediatamente.
-
-</p>
-
-</div>
-
-<div class="faq-item">
-
-<h3>
-
-¿Sirve para principiantes?
-
-</h3>
-
-<p>
-
-Sí. Está pensado tanto para personas que empiezan como para quienes ya entrenan.
-
-</p>
-
-</div>
-
-<div class="faq-item">
-
-<h3>
-
-¿Necesito suplementos?
-
-</h3>
-
-<p>
-
-No. Los suplementos son opcionales y el cuadernillo explica cuándo pueden ser útiles.
-
-</p>
-
-</div>
-
-</div>
-
+        <details class="faq-item">
+            <summary>¿Necesito suplementos?</summary>
+            <p>No. Los suplementos son opcionales y el cuadernillo explica cuándo pueden ser útiles.</p>
+        </details>
+    </div>
 </section>
 
 <!-- ================= FOOTER ================= -->
-
 <footer>
+    <div class="container footer">
+        <div class="footer-brand">
+            <h3>Air<span>Nutrition</span></h3>
+            <p>Empieza hoy a mejorar tu alimentación y entrenamiento con una guía adaptada a tus objetivos.</p>
+        </div>
 
-<div class="container footer">
-
-<div>
-
-<h3>
-
-FitnessBook
-
-</h3>
-
-<p>
-
-Empieza hoy a mejorar tu alimentación y entrenamiento con una guía adaptada a tus objetivos.
-
-</p>
-
-</div>
-
-<div>
-
-<a href="#">
-
-Instagram
-
-</a>
-
-<a href="#">
-
-TikTok
-
-</a>
-
-<a href="#">
-
-Contacto
-
-</a>
-
-</div>
-
-</div>
-
+        <div class="footer-links">
+            <a href="#" aria-label="Instagram">Instagram</a>
+            <a href="#" aria-label="TikTok">TikTok</a>
+            <a href="#" aria-label="Contacto">Contacto</a>
+        </div>
+    </div>
 </footer>
 
 <script src="script.js"></script>
-
 </body>
 </html>

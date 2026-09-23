@@ -1,924 +1,574 @@
-/* ELEMENTOS DEL TEST */
-
-const resultBox = document.getElementById("resultBox");
-const recommendedBook = document.getElementById("recommendedBook");
-const recommendedText = document.getElementById("recommendedText");
-
-const questions=[
-
-{
-
-question:"¿Cuál es tu objetivo?",
-
-answers:[
-
-"Perder grasa",
-
-"Ganar músculo",
-
-"Mantener",
-
-"Rendimiento"
-
-],
-
-type:"goal"
-
-},
-
-{
-
-question:"¿Cuántos días entrenas?",
-
-answers:[
-
-"0-2 días",
-
-"3-4 días",
-
-"5+ días"
-
-],
-
-type:"days"
-
-},
-
-{
-
-question:"¿Cuál es tu nivel?",
-
-answers:[
-
-"Principiante",
-
-"Intermedio",
-
-"Avanzado"
-
-],
-
-type:"level"
-
-},
-
-{
-
-question:"¿Qué buscas?",
-
-answers:[
-
-"Nutrición",
-
-"Entrenamiento",
-
-"Ambos"
-
-],
-
-type:"need"
-
-},
-
-{
-
-question:"¿Cómo prefieres progresar?",
-
-answers:[
-
-"Rápido",
-
-"Poco a poco"
-
-],
-
-type:"speed"
-
-}
-
-];
-
-let currentQuestion=0;
-
-const answers={};
-
-const title=document.getElementById("questionTitle");
-const container=document.getElementById("answersContainer");
-const step=document.getElementById("stepText");
-const progress=document.getElementById("progressFill");
-
-const prev=document.getElementById("prevBtn");
-const next=document.getElementById("nextBtn");
-
-loadQuestion();
-
-function loadQuestion(){
-
-const q=questions[currentQuestion];
-
-title.innerHTML=q.question;
-
-container.innerHTML="";
-
-step.innerHTML=`Pregunta ${currentQuestion+1} de ${questions.length}`;
-
-progress.style.width=((currentQuestion+1)/questions.length*100)+"%";
-
-q.answers.forEach(answer=>{
-
-const div=document.createElement("div");
-
-div.className="answer";
-
-div.innerHTML=answer;
-
-if(answers[q.type]==answer){
-
-div.classList.add("selected");
-
-}
-
-div.onclick=()=>{
-
-document.querySelectorAll(".answer").forEach(a=>a.classList.remove("selected"));
-
-div.classList.add("selected");
-
-answers[q.type]=answer;
-
-};
-
-container.appendChild(div);
-
-});
-
-prev.disabled=currentQuestion==0;
-
-next.innerHTML=currentQuestion==questions.length-1
-?"Ver resultado"
-:"Siguiente";
-
-}
-
-next.onclick=()=>{
-
-const type=questions[currentQuestion].type;
-
-if(!answers[type]){
-
-alert("Selecciona una opción");
-
-return;
-
-}
-
-if(currentQuestion<questions.length-1){
-
-currentQuestion++;
-
-loadQuestion();
-
-}
-
-else{
-
-finishTest();
-
-}
-
-};
-
-prev.onclick=()=>{
-
-if(currentQuestion>0){
-
-currentQuestion--;
-
-loadQuestion();
-
-}
-
-};
-
-function finishTest(){
-
-document.querySelector(".test-container").style.display="none";
-
-resultBox.style.display="block";
-
-recommendedBook.innerHTML="Calculando...";
-
-recommendedText.innerHTML="";
-
-setTimeout(()=>{
-
-const goal=answers.goal;
-
-switch(goal){
-
-case"Perder grasa":
-
-recommendedBook.innerHTML="🔥 Cuadernillo Definición";
-
-recommendedText.innerHTML="Nuestro cuadernillo de definición está pensado para ayudarte a perder grasa sin perder músculo mediante una alimentación equilibrada y una rutina eficaz.";
-
-break;
-
-case"Ganar músculo":
-
-recommendedBook.innerHTML="💪 Cuadernillo Volumen";
-
-recommendedText.innerHTML="Aprende a ganar masa muscular con un superávit bien estructurado y una planificación de entrenamiento progresiva.";
-
-break;
-
-case"Mantener":
-
-recommendedBook.innerHTML="⚖️ Cuadernillo Mantenimiento";
-
-recommendedText.innerHTML="Ideal para mantener tu físico todo el año sin dietas estrictas.";
-
-break;
-
-default:
-
-recommendedBook.innerHTML="🏃 Cuadernillo Rendimiento";
-
-recommendedText.innerHTML="Optimiza tu alimentación y entrenamiento para mejorar tu rendimiento deportivo.";
-
-}
-
-},1000);
-
-}
-
-/*==================================================
-                ANIMACIONES SCROLL
-==================================================*/
-
-const revealElements = document.querySelectorAll(
-    ".card, .question, .faq-item, .imc-box, .result-box"
-);
-
-function revealOnScroll() {
-
-    const trigger = window.innerHeight * 0.85;
-
-    revealElements.forEach((element) => {
-
-        const top = element.getBoundingClientRect().top;
-
-        if (top < trigger) {
-
-            element.classList.add("show");
-
+/* ============================================================
+   FITNESSBOOK — SCRIPT PRINCIPAL
+   Versión reforzada y organizada por módulos
+   ============================================================ */
+
+'use strict';
+
+/* ============================================================
+   1. UTILIDADES GENERALES
+   ============================================================ */
+
+const $  = (sel, ctx = document) => ctx.querySelector(sel);
+const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
+
+/* ============================================================
+   2. TEST PERSONALIZADO
+   ============================================================ */
+
+const TestModule = (() => {
+
+    /* --- Referencias DOM --- */
+    const title        = $('#questionTitle');
+    const container    = $('#answersContainer');
+    const step         = $('#stepText');
+    const progress     = $('#progressFill');
+    const prevBtn      = $('#prevBtn');
+    const nextBtn      = $('#nextBtn');
+    const resultBox    = $('#resultBox');
+    const recommendedBook = $('#recommendedBook');
+    const recommendedText = $('#recommendedText');
+    const testContainer   = $('.test-container');
+
+    /* --- Preguntas --- */
+    const questions = [
+        {
+            question: '¿Cuál es tu objetivo?',
+            answers : ['Perder grasa', 'Ganar músculo', 'Mantener', 'Rendimiento'],
+            type    : 'goal'
+        },
+        {
+            question: '¿Cuántos días entrenas?',
+            answers : ['0-2 días', '3-4 días', '5+ días'],
+            type    : 'days'
+        },
+        {
+            question: '¿Cuál es tu nivel?',
+            answers : ['Principiante', 'Intermedio', 'Avanzado'],
+            type    : 'level'
+        },
+        {
+            question: '¿Qué buscas?',
+            answers : ['Nutrición', 'Entrenamiento', 'Ambos'],
+            type    : 'need'
+        },
+        {
+            question: '¿Cómo prefieres progresar?',
+            answers : ['Rápido', 'Poco a poco'],
+            type    : 'speed'
         }
+    ];
 
-    });
+    /* --- Estado --- */
+    const STORAGE_KEY = 'fitnessbook_test_answers';
+    let currentQuestion = 0;
+    let answers = loadAnswers();
 
-}
+    /* --- Persistencia --- */
+    function loadAnswers() {
+        try {
+            const raw = localStorage.getItem(STORAGE_KEY);
+            return raw ? JSON.parse(raw) : {};
+        } catch {
+            return {};
+        }
+    }
 
-window.addEventListener("scroll", revealOnScroll);
+    function saveAnswers() {
+        try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(answers));
+        } catch { /* modo privado, ignorar */ }
+    }
 
-window.addEventListener("load", revealOnScroll);
+    function clearAnswers() {
+        answers = {};
+        try { localStorage.removeItem(STORAGE_KEY); } catch {}
+    }
 
-/*==================================================
-            EFECTO EN BOTONES (opcional)
-==================================================*/
+    /* --- Render --- */
+    function loadQuestion() {
+        const q = questions[currentQuestion];
 
-const buttons = document.querySelectorAll(
-    ".btn-black, .btn-white, .btn-nav"
-);
+        title.textContent = q.question;
+        container.innerHTML = '';
 
-buttons.forEach((button) => {
+        step.textContent = `Pregunta ${currentQuestion + 1} de ${questions.length}`;
+        progress.style.width =
+            ((currentQuestion + 1) / questions.length) * 100 + '%';
 
-    button.addEventListener("mousedown", () => {
+        q.answers.forEach(answer => {
+            const div = document.createElement('button');
+            div.type = 'button';
+            div.className = 'answer';
+            div.textContent = answer;
+            div.setAttribute('role', 'radio');
+            div.setAttribute('aria-checked', answers[q.type] === answer);
 
-        button.style.transform = "scale(0.97)";
-
-    });
-
-    button.addEventListener("mouseup", () => {
-
-        button.style.transform = "";
-
-    });
-
-    button.addEventListener("mouseleave", () => {
-
-        button.style.transform = "";
-
-    });
-
-});
-
-/*==================================================
-            RESALTAR OPCIÓN SELECCIONADA
-==================================================*/
-
-const radioButtons = document.querySelectorAll(
-    '.question input[type="radio"]'
-);
-
-radioButtons.forEach((radio) => {
-
-    radio.addEventListener("change", () => {
-
-        // Buscar todas las etiquetas del mismo grupo
-
-        const group = radio.name;
-
-        document
-            .querySelectorAll(`input[name="${group}"]`)
-            .forEach((input) => {
-
-                input.parentElement.style.borderColor = "#dddddd";
-                input.parentElement.style.background = "#ffffff";
-
-            });
-
-        // Resaltar la seleccionada
-        radio.parentElement.style.borderColor = "#111111";
-        radio.parentElement.style.background = "#f3f3f3";
-    });
-});
-
-/*==================================================
-                CALCULADORA IMC
-==================================================*/
-
-const heightInput = document.getElementById("height");
-const weightInput = document.getElementById("weight");
-const imcButton = document.getElementById("calculateIMC");
-const imcResult = document.getElementById("imcResult");
-
-if (imcButton) {
-
-    imcButton.addEventListener("click", calculateIMC);
-
-}
-
-// También calcular pulsando ENTER
-
-[heightInput, weightInput].forEach(input => {
-
-    if (input) {
-
-        input.addEventListener("keypress", function(e){
-
-            if(e.key === "Enter"){
-
-                calculateIMC();
-
+            if (answers[q.type] === answer) {
+                div.classList.add('selected');
             }
 
+            div.addEventListener('click', () => selectAnswer(q.type, answer, div));
+            container.appendChild(div);
         });
 
+        prevBtn.disabled = currentQuestion === 0;
+        nextBtn.textContent =
+            currentQuestion === questions.length - 1
+                ? 'Ver resultado'
+                : 'Siguiente';
     }
 
-});
-
-function calculateIMC(){
-
-    const height = Number(heightInput.value);
-    const weight = Number(weightInput.value);
-
-    // Limpiar clases anteriores
-
-    imcResult.classList.remove(
-        "imc-good",
-        "imc-warning",
-        "imc-danger"
-    );
-
-    // Validaciones
-
-    if(!height || !weight){
-
-        showIMCMessage(
-            "⚠️ Datos incompletos",
-            "Introduce tu altura y tu peso."
-        );
-
-        return;
-
+    function selectAnswer(type, value, el) {
+        $$('.answer', container).forEach(a => {
+            a.classList.remove('selected');
+            a.setAttribute('aria-checked', 'false');
+        });
+        el.classList.add('selected');
+        el.setAttribute('aria-checked', 'true');
+        answers[type] = value;
+        saveAnswers();
     }
 
-    if(height < 80 || height > 250){
+    /* --- Navegación --- */
+    function goNext() {
+        const type = questions[currentQuestion].type;
 
-        showIMCMessage(
-            "⚠️ Altura incorrecta",
-            "Introduce la altura en centímetros."
-        );
+        if (!answers[type]) {
+            showInlineWarning('Selecciona una opción para continuar');
+            return;
+        }
 
-        return;
-
+        if (currentQuestion < questions.length - 1) {
+            currentQuestion++;
+            loadQuestion();
+        } else {
+            finishTest();
+        }
     }
 
-    if(weight < 20 || weight > 350){
-
-        showIMCMessage(
-            "⚠️ Peso incorrecto",
-            "Introduce un peso válido."
-        );
-
-        return;
-
+    function goPrev() {
+        if (currentQuestion > 0) {
+            currentQuestion--;
+            loadQuestion();
+        }
     }
 
-    // Conversión
-
-    const meters = height / 100;
-
-    const imc = weight / (meters * meters);
-
-    const value = imc.toFixed(1);
-
-    let title = "";
-    let description = "";
-
-    /*=====================================
-                CLASIFICACIÓN
-    =====================================*/
-
-    if(imc < 18.5){
-
-        title = `🔵 IMC: ${value}`;
-
-        description =
-        "Bajo peso. Podría ser recomendable aumentar tu ingesta calórica y consultar con un profesional si esta situación se mantiene.";
-
-        imcResult.classList.add("imc-warning");
-
+    /* --- Aviso visual (en lugar de alert) --- */
+    function showInlineWarning(msg) {
+        let warn = $('#testWarning');
+        if (!warn) {
+            warn = document.createElement('p');
+            warn.id = 'testWarning';
+            warn.style.cssText =
+                'color:#d32f2f;font-weight:600;margin-top:12px;text-align:center;';
+            testContainer.appendChild(warn);
+        }
+        warn.textContent = '⚠️ ' + msg;
+        clearTimeout(warn._t);
+        warn._t = setTimeout(() => warn.remove(), 2500);
     }
 
-    else if(imc < 25){
+    /* --- Resultado --- */
+    function finishTest() {
+        testContainer.style.display = 'none';
+        resultBox.style.display = 'block';
 
-        title = `🟢 IMC: ${value}`;
+        recommendedBook.textContent = 'Calculando...';
+        recommendedText.textContent = '';
 
-        description =
-        "Peso saludable. Estás dentro del rango recomendado para la mayoría de adultos.";
-
-        imcResult.classList.add("imc-good");
-
+        setTimeout(() => {
+            const rec = getRecommendation(answers);
+            recommendedBook.textContent = rec.title;
+            recommendedText.textContent = rec.text;
+        }, 600);
     }
 
-    else if(imc < 30){
+    /* --- Lógica de recomendación usando TODAS las respuestas --- */
+    function getRecommendation(a) {
+        const base = {
+            'Perder grasa': {
+                title: '🔥 Cuadernillo Definición',
+                text : 'Nuestro cuadernillo de definición está pensado para ayudarte a perder grasa sin perder músculo mediante una alimentación equilibrada y una rutina eficaz.'
+            },
+            'Ganar músculo': {
+                title: '💪 Cuadernillo Volumen',
+                text : 'Aprende a ganar masa muscular con un superávit bien estructurado y una planificación de entrenamiento progresiva.'
+            },
+            'Mantener': {
+                title: '⚖️ Cuadernillo Mantenimiento',
+                text : 'Ideal para mantener tu físico todo el año sin dietas estrictas.'
+            },
+            'Rendimiento': {
+                title: '🏃 Cuadernillo Rendimiento',
+                text : 'Optimiza tu alimentación y entrenamiento para mejorar tu rendimiento deportivo.'
+            }
+        };
 
-        title = `🟡 IMC: ${value}`;
+        const rec = { ...base[a.goal] };
 
-        description =
-        "Sobrepeso. Puede ser un buen momento para mejorar tus hábitos de alimentación y actividad física.";
+        /* Matices según el resto de respuestas */
+        const extras = [];
 
-        imcResult.classList.add("imc-warning");
+        if (a.level === 'Principiante') {
+            extras.push('Incluye una introducción paso a paso ideal para empezar.');
+        }
+        if (a.level === 'Avanzado') {
+            extras.push('Con ajustes avanzados para exprimir cada fase.');
+        }
+        if (a.days === '0-2 días') {
+            extras.push('Rutinas adaptadas a pocos días de entrenamiento.');
+        }
+        if (a.days === '5+ días') {
+            extras.push('Con planificación para semanas de alta frecuencia.');
+        }
+        if (a.need === 'Nutrición') {
+            extras.push('Enfocado especialmente en la parte nutricional.');
+        }
+        if (a.need === 'Entrenamiento') {
+            extras.push('Con más peso en la parte de entrenamiento.');
+        }
+        if (a.speed === 'Rápido') {
+            extras.push('Con estrategias para ver resultados cuanto antes.');
+        }
+        if (a.speed === 'Poco a poco') {
+            extras.push('Pensado para progresar de forma sostenible.');
+        }
 
+        if (extras.length) {
+            rec.text += ' ' + extras.join(' ');
+        }
+
+        return rec;
     }
 
-    else if(imc < 35){
-
-        title = `🟠 IMC: ${value}`;
-
-        description =
-        "Obesidad grado I. Es recomendable consultar con un profesional para recibir orientación personalizada.";
-
-        imcResult.classList.add("imc-danger");
-
+    /* --- Reinicio --- */
+    function restart() {
+        clearAnswers();
+        currentQuestion = 0;
+        testContainer.style.display = '';
+        resultBox.style.display = 'none';
+        loadQuestion();
+        testContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
 
-    else if(imc < 40){
+    /* --- Init --- */
+    function init() {
+        if (!title || !container) return; // no estamos en la página del test
 
-        title = `🔴 IMC: ${value}`;
+        loadQuestion();
+        nextBtn.addEventListener('click', goNext);
+        prevBtn.addEventListener('click', goPrev);
 
-        description =
-        "Obesidad grado II. Existe un mayor riesgo para la salud y es aconsejable buscar asesoramiento profesional.";
-
-        imcResult.classList.add("imc-danger");
-
+        /* Botón "Repetir test" (creado dinámicamente si no existe) */
+        let restartBtn = $('#restartTest');
+        if (!restartBtn) {
+            restartBtn = document.createElement('button');
+            restartBtn.id = 'restartTest';
+            restartBtn.type = 'button';
+            restartBtn.className = 'btn-white';
+            restartBtn.textContent = '↻ Repetir test';
+            restartBtn.style.marginTop = '25px';
+            resultBox.appendChild(restartBtn);
+        }
+        restartBtn.addEventListener('click', restart);
     }
 
-    else{
+    return { init };
+})();
 
-        title = `🚨 IMC: ${value}`;
+/* ============================================================
+   3. CALCULADORA IMC
+   ============================================================ */
 
-        description =
-        "Obesidad grado III. Es importante acudir a un profesional sanitario para una valoración individual.";
+const IMCModule = (() => {
 
-        imcResult.classList.add("imc-danger");
+    const heightInput = $('#height');
+    const weightInput = $('#weight');
+    const imcButton   = $('#calculateIMC');
+    const imcResult   = $('#imcResult');
 
+    if (!imcButton || !heightInput || !weightInput || !imcResult) return { init() {} };
+
+    /* --- Clasificación --- */
+    const CATEGORIES = [
+        { max: 18.5, icon:'🔵', label:'Bajo peso',
+          desc:'Podría ser recomendable aumentar tu ingesta calórica y consultar con un profesional si esta situación se mantiene.',
+          cls:'imc-warning' },
+        { max: 25,   icon:'🟢', label:'Peso saludable',
+          desc:'Estás dentro del rango recomendado para la mayoría de adultos.',
+          cls:'imc-good' },
+        { max: 30,   icon:'🟡', label:'Sobrepeso',
+          desc:'Puede ser un buen momento para mejorar tus hábitos de alimentación y actividad física.',
+          cls:'imc-warning' },
+        { max: 35,   icon:'🟠', label:'Obesidad grado I',
+          desc:'Es recomendable consultar con un profesional para recibir orientación personalizada.',
+          cls:'imc-danger' },
+        { max: 40,   icon:'🔴', label:'Obesidad grado II',
+          desc:'Existe un mayor riesgo para la salud y es aconsejable buscar asesoramiento profesional.',
+          cls:'imc-danger' },
+        { max: Infinity, icon:'🚨', label:'Obesidad grado III',
+          desc:'Es importante acudir a un profesional sanitario para una valoración individual.',
+          cls:'imc-danger' }
+    ];
+
+    function getCategory(imc) {
+        return CATEGORIES.find(c => imc < c.max);
     }
 
-    showIMCMessage(title, description);
-
-}
-
-/*==================================================
-                MOSTRAR RESULTADO
-==================================================*/
-
-function showIMCMessage(title, text){
-
-    imcResult.innerHTML = `
-
-        <h3>${title}</h3>
-
-        <p>${text}</p>
-
-    `;
-
-}
-
-/*==================================================
-                EFECTO DE ENTRADA
-==================================================*/
-
-if(imcButton){
-
-    imcButton.addEventListener("click", () => {
+    function showMessage(title, text, cls) {
+        imcResult.classList.remove('imc-good', 'imc-warning', 'imc-danger');
+        if (cls) imcResult.classList.add(cls);
+        imcResult.innerHTML = `<h3>${title}</h3><p>${text}</p>`;
 
         imcResult.animate(
-
             [
-
-                {
-
-                    opacity:0,
-
-                    transform:"translateY(20px)"
-
-                },
-
-                {
-
-                    opacity:1,
-
-                    transform:"translateY(0)"
-
-                }
-
+                { opacity: 0, transform: 'translateY(20px)' },
+                { opacity: 1, transform: 'translateY(0)' }
             ],
-
-            {
-
-                duration:400,
-
-                easing:"ease"
-
-            }
-
+            { duration: 400, easing: 'ease' }
         );
-
-    });
-
-}
-
-/*==================================================
-                FORMATO INPUT
-==================================================*/
-
-const numericInputs = document.querySelectorAll(
-    "#height, #weight"
-);
-
-numericInputs.forEach(input => {
-
-    input.addEventListener("input", () => {
-
-        input.value = input.value.replace(/[^0-9.]/g,"");
-
-    });
-
-});
-
-numericInputs.forEach(input => {
-
-    input.addEventListener("focus", () => {
-
-        input.select();
-
-    });
-
-});
-
-/*==================================================
-            FITNESSBOOK
-            SCRIPT.JS - PARTE 3
-==================================================*/
-
-
-/*==================================================
-            NAVBAR AL HACER SCROLL
-==================================================*/
-
-const header = document.querySelector("header");
-
-window.addEventListener("scroll", () => {
-
-    if(window.scrollY > 50){
-
-        header.style.padding = "0";
-        header.style.boxShadow = "0 8px 30px rgba(0,0,0,.08)";
-        header.style.background = "rgba(255,255,255,.95)";
-        header.style.backdropFilter = "blur(14px)";
-
     }
 
-    else{
+    function calculate() {
+        const height = Number(heightInput.value);
+        const weight = Number(weightInput.value);
 
-        header.style.boxShadow = "none";
-        header.style.background = "rgba(255,255,255,.85)";
+        imcResult.classList.remove('imc-good', 'imc-warning', 'imc-danger');
 
+        if (!height || !weight) {
+            return showMessage('⚠️ Datos incompletos', 'Introduce tu altura y tu peso.');
+        }
+        if (height < 80 || height > 250) {
+            return showMessage('⚠️ Altura incorrecta', 'Introduce la altura en centímetros (80–250).');
+        }
+        if (weight < 20 || weight > 350) {
+            return showMessage('⚠️ Peso incorrecto', 'Introduce un peso válido (20–350 kg).');
+        }
+
+        const meters = height / 100;
+        const imc    = weight / (meters * meters);
+        const value  = imc.toFixed(1);
+        const cat    = getCategory(imc);
+
+        showMessage(
+            `${cat.icon} IMC: ${value} — ${cat.label}`,
+            cat.desc,
+            cat.cls
+        );
     }
 
-});
+    function init() {
+        imcButton.addEventListener('click', calculate);
 
-
-/*==================================================
-            SCROLL SUAVE EN ENLACES
-==================================================*/
-
-document.querySelectorAll('a[href^="#"]').forEach(link=>{
-
-    link.addEventListener("click",function(e){
-
-        e.preventDefault();
-
-        const id=this.getAttribute("href");
-
-        const section=document.querySelector(id);
-
-        if(section){
-
-            section.scrollIntoView({
-
-                behavior:"smooth",
-                block:"start"
-
+        [heightInput, weightInput].forEach(input => {
+            input.addEventListener('keypress', e => {
+                if (e.key === 'Enter') calculate();
             });
 
-        }
-
-    });
-
-});
-
-
-/*==================================================
-            EFECTO PARALLAX HERO
-==================================================*/
-
-const hero=document.querySelector(".hero");
-
-window.addEventListener("scroll",()=>{
-
-    const offset=window.scrollY;
-
-    hero.style.backgroundPositionY=offset*0.3+"px";
-
-});
-
-
-/*==================================================
-            APARICIÓN PROGRESIVA
-==================================================*/
-
-const observer=new IntersectionObserver((entries)=>{
-
-    entries.forEach(entry=>{
-
-        if(entry.isIntersecting){
-
-            entry.target.classList.add("show");
-
-        }
-
-    });
-
-},{
-    threshold:0.15
-});
-
-document.querySelectorAll(
-
-    ".card, .question, .faq-item, .section-title, .imc-box"
-
-).forEach(el=>{
-
-    observer.observe(el);
-
-});
-
-
-/*==================================================
-            CONTADOR BOTONES
-==================================================*/
-
-const buyButtons=document.querySelectorAll(".card .btn-black");
-
-buyButtons.forEach(button=>{
-
-    button.addEventListener("mouseenter",()=>{
-
-        button.innerHTML="Comprar →";
-
-    });
-
-    button.addEventListener("mouseleave",()=>{
-
-        button.innerHTML="Comprar";
-
-    });
-
-});
-
-
-/*==================================================
-            ANIMACIÓN TARJETAS
-==================================================*/
-
-const cards=document.querySelectorAll(".card");
-
-cards.forEach(card=>{
-
-    card.addEventListener("mousemove",(e)=>{
-
-        const rect=card.getBoundingClientRect();
-
-        const x=e.clientX-rect.left;
-        const y=e.clientY-rect.top;
-
-        const centerX=rect.width/2;
-        const centerY=rect.height/2;
-
-        const rotateX=((y-centerY)/18);
-        const rotateY=((centerX-x)/18);
-
-        card.style.transform=
-        `perspective(1000px)
-        rotateX(${rotateX}deg)
-        rotateY(${rotateY}deg)
-        translateY(-10px)`;
-
-    });
-
-    card.addEventListener("mouseleave",()=>{
-
-        card.style.transform="";
-
-    });
-
-});
-
-
-/*==================================================
-            EFECTO RIPPLE BOTONES
-==================================================*/
-
-document.querySelectorAll(".btn-black").forEach(button=>{
-
-    button.addEventListener("click",function(e){
-
-        const circle=document.createElement("span");
-
-        const diameter=Math.max(
-            this.clientWidth,
-            this.clientHeight
-        );
-
-        circle.style.width=diameter+"px";
-        circle.style.height=diameter+"px";
-
-        circle.style.position="absolute";
-        circle.style.borderRadius="50%";
-        circle.style.background="rgba(255,255,255,.3)";
-        circle.style.pointerEvents="none";
-        circle.style.transform="scale(0)";
-        circle.style.animation="ripple .6s linear";
-
-        const rect=this.getBoundingClientRect();
-
-        circle.style.left=e.clientX-rect.left-diameter/2+"px";
-        circle.style.top=e.clientY-rect.top-diameter/2+"px";
-
-        this.appendChild(circle);
-
-        setTimeout(()=>{
-
-            circle.remove();
-
-        },600);
-
-    });
-
-});
-
-
-/*==================================================
-            CARGA DE PÁGINA
-==================================================*/
-
-window.addEventListener("load",()=>{
-
-    document.body.classList.add("loaded");
-
-});
-
-
-/*==================================================
-            BOTÓN VOLVER ARRIBA
-==================================================*/
-
-const topButton=document.createElement("button");
-
-topButton.innerHTML="↑";
-
-topButton.className="topButton";
-
-document.body.appendChild(topButton);
-
-topButton.style.position="fixed";
-topButton.style.right="25px";
-topButton.style.bottom="25px";
-topButton.style.width="55px";
-topButton.style.height="55px";
-topButton.style.borderRadius="50%";
-topButton.style.border="none";
-topButton.style.background="#111";
-topButton.style.color="white";
-topButton.style.fontSize="22px";
-topButton.style.cursor="pointer";
-topButton.style.opacity="0";
-topButton.style.transition=".3s";
-topButton.style.zIndex="999";
-
-
-window.addEventListener("scroll",()=>{
-
-    if(window.scrollY>500){
-
-        topButton.style.opacity="1";
-
+            /* Solo números y un único punto decimal */
+            input.addEventListener('input', () => {
+                let v = input.value.replace(/[^0-9.]/g, '');
+                const parts = v.split('.');
+                if (parts.length > 2) v = parts[0] + '.' + parts.slice(1).join('');
+                input.value = v;
+            });
+
+            input.addEventListener('focus', () => input.select());
+        });
     }
 
-    else{
+    return { init };
+})();
 
-        topButton.style.opacity="0";
+/* ============================================================
+   4. UI GENERAL (navbar, scroll, reveal, top button, etc.)
+   ============================================================ */
 
+const UIModule = (() => {
+
+    /* --- Navbar con scroll --- */
+    function initNavbar() {
+        const header = $('header');
+        if (!header) return;
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.style.boxShadow = '0 8px 30px rgba(0,0,0,.08)';
+                header.style.background = 'rgba(255,255,255,.95)';
+            } else {
+                header.style.boxShadow = 'none';
+                header.style.background = 'rgba(255,255,255,.85)';
+            }
+        }, { passive: true });
     }
 
+    /* --- Scroll suave --- */
+    function initSmoothScroll() {
+        $$('a[href^="#"]').forEach(link => {
+            link.addEventListener('click', e => {
+                const id = link.getAttribute('href');
+                if (id === '#' || id.length < 2) return;
+                const section = document.querySelector(id);
+                if (section) {
+                    e.preventDefault();
+                    section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    }
+
+    /* --- Reveal con IntersectionObserver (único sistema) --- */
+    function initReveal() {
+        const elements = $$('.card, .question, .faq-item, .section-title, .imc-box, .result-box');
+        if (!elements.length) return;
+
+        if (!('IntersectionObserver' in window)) {
+            elements.forEach(el => el.classList.add('show'));
+            return;
+        }
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('show');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15 });
+
+        elements.forEach(el => observer.observe(el));
+    }
+
+    /* --- Hover en botones "Comprar" --- */
+    function initBuyButtons() {
+        $$('.card .btn-black').forEach(button => {
+            button.addEventListener('mouseenter', () => button.textContent = 'Comprar →');
+            button.addEventListener('mouseleave', () => button.textContent = 'Comprar');
+        });
+    }
+
+    /* --- Ripple en botones --- */
+    function initRipple() {
+        $$('.btn-black').forEach(button => {
+            button.style.position = 'relative';
+            button.style.overflow = 'hidden';
+
+            button.addEventListener('click', function (e) {
+                const circle = document.createElement('span');
+                const diameter = Math.max(this.clientWidth, this.clientHeight);
+
+                Object.assign(circle.style, {
+                    width:  diameter + 'px',
+                    height: diameter + 'px',
+                    position: 'absolute',
+                    borderRadius: '50%',
+                    background: 'rgba(255,255,255,.3)',
+                    pointerEvents: 'none',
+                    transform: 'scale(0)',
+                    animation: 'ripple .6s linear'
+                });
+
+                const rect = this.getBoundingClientRect();
+                circle.style.left = (e.clientX - rect.left - diameter / 2) + 'px';
+                circle.style.top  = (e.clientY - rect.top  - diameter / 2) + 'px';
+
+                this.appendChild(circle);
+                setTimeout(() => circle.remove(), 600);
+            });
+        });
+    }
+
+    /* --- Menú hamburguesa --- */
+    function initMobileMenu(){
+        const toggle = document.getElementById('navToggle');
+        const nav = document.getElementById('primaryNav');
+        if(!toggle || !nav) return;
+
+        toggle.addEventListener('click', () => {
+            const open = nav.classList.toggle('open');
+            toggle.setAttribute('aria-expanded', open);
+            toggle.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+        });
+
+        // Cerrar al pulsar un enlace
+        nav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                nav.classList.remove('open');
+                toggle.setAttribute('aria-expanded', 'false');
+                toggle.setAttribute('aria-label', 'Abrir menú');
+            });
+        });
+    }
+
+    /* --- Botón volver arriba --- */
+    function initTopButton() {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'topButton';
+        btn.setAttribute('aria-label', 'Volver arriba');
+        btn.innerHTML = '↑';
+        document.body.appendChild(btn);
+
+        window.addEventListener('scroll', () => {
+            btn.classList.toggle('visible', window.scrollY > 500);
+        }, { passive: true });
+
+        btn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    }
+
+    /* --- Año automático en footer --- */
+    function initFooterYear() {
+        const footer = $('footer');
+        if (!footer) return;
+
+        if (!$('#footerYear')) {
+            const year = document.createElement('p');
+            year.id = 'footerYear';
+            year.className = 'footer-year';
+            year.textContent = `© ${new Date().getFullYear()} FitnessBook. Todos los derechos reservados.`;
+            footer.appendChild(year);
+        }
+    }
+
+    /* --- Prevenir doble click accidental --- */
+    function initDoubleClickGuard() {
+        $$('button').forEach(button => {
+            button.addEventListener('dblclick', e => e.preventDefault());
+        });
+    }
+
+    /* --- Página cargada --- */
+    function initLoadedClass() {
+        window.addEventListener('load', () => document.body.classList.add('loaded'));
+    }
+
+    function init() {
+        initNavbar();
+        initSmoothScroll();
+        initReveal();
+        initBuyButtons();
+        initRipple();
+        initTopButton();
+        initFooterYear();
+        initDoubleClickGuard();
+        initLoadedClass();
+    }
+
+    return { init };
+})();
+
+/* ============================================================
+   5. ARRANQUE
+   ============================================================ */
+
+document.addEventListener('DOMContentLoaded', () => {
+    TestModule.init();
+    IMCModule.init();
+    UIModule.init();
+    initMobileMenu();
+    console.log('%cAir Nutrition', 'font-size:30px;font-weight:bold;color:#2f7d4f');
+    console.log('%cLanding cargada correctamente.', 'font-size:14px;color:#666');
 });
-
-
-topButton.addEventListener("click",()=>{
-
-    window.scrollTo({
-
-        top:0,
-
-        behavior:"smooth"
-
-    });
-
-});
-
-
-/*==================================================
-            AÑO AUTOMÁTICO FOOTER
-==================================================*/
-
-const footer=document.querySelector("footer");
-
-if(footer){
-
-    const year=document.createElement("p");
-
-    year.style.marginTop="40px";
-    year.style.color="#999";
-    year.style.fontSize=".9rem";
-    year.style.textAlign="center";
-
-    year.innerHTML=`© ${new Date().getFullYear()} FitnessBook. Todos los derechos reservados.`;
-
-    footer.appendChild(year);
-
-}
-
-
-/*==================================================
-            PREVENIR DOBLE CLICK
-==================================================*/
-
-document.querySelectorAll("button").forEach(button=>{
-
-    button.addEventListener("dblclick",(e)=>{
-
-        e.preventDefault();
-
-    });
-
-});
-
-console.log("%cFitnessBook",
-"font-size:30px;font-weight:bold;color:#111");
-
-console.log("%cLanding desarrollada correctamente.",
-"font-size:14px;color:#666");
