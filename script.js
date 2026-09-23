@@ -528,7 +528,7 @@ const UIModule = (() => {
             const year = document.createElement('p');
             year.id = 'footerYear';
             year.className = 'footer-year';
-            year.textContent = `© ${new Date().getFullYear()} FitnessBook. Todos los derechos reservados.`;
+            year.textContent = `© ${new Date().getFullYear()} AirNutrition. Todos los derechos reservados.`;
             footer.appendChild(year);
         }
     }
